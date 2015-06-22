@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset=utf-8 />
+        <title>FatDeaths.com</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    </head>
+
+    <body>
+      <p></p>
+      <div class="container">
+
+        <div class="jumbotron">
+          <h1 id="death_count" style="text-align: center"></h1>
+        </div>
+
+        <div class="jumbotron" style="background-color:white">
+          <p>
+          According to the <a href="https://www.wvdhhr.org/bph/oehp/obesity/mortality.htm" target="_blank">West Virigian Deptartment of Health and Human Resources</a>, an estimated <code>300,000</code> U.S. deaths <strong><em>per year</em></strong> are due to the obesity epidemic.
+          <br/>
+          <br/>
+          This is more than <a href="http://www.cdc.gov/alcohol/fact-sheets/alcohol-use.htm" target="_blank">alcohol (88,000)</a>, <a href="http://www.cdc.gov/nchs/fastats/homicide.htm" target="_blank">firearms (11,208)</a> and barely behind <a href="http://www.cdc.gov/tobacco/data_statistics/fact_sheets/fast_facts/" target="_blank">cigarettes (480,000)</a>.  <strong>It is an epidemic and on the rise.</strong>
+          <br/>
+          <br/>
+          That comes down to <strong>822</strong> deaths per day, <strong>34</strong> deaths per hour, and <strong><em>a half death every minute</em></strong>.
+          <br/>
+          <br/>
+          This site counts the number of deaths caused by obesity since being published to the web on <code id="start_date"></code>.
+          </p>
+        </div>
+      </div>
+
+      <script type="text/javascript">
+      (function() {
+        var do_calc = function() {
+          var ms_per_min = 60000;
+          var start_date = new Date(2015, 5, 21);
+          var end_date = new Date();
+          var start_end_diff = Math.abs(start_date.getTime() - end_date.getTime());
+          start_end_diff = Math.round(start_end_diff / ms_per_min);
+
+          document.getElementById("death_count").innerHTML = "<span style=\"font-size: 100pt\">" + start_end_diff + "</span><br/>deaths caused by obesity since " + start_date.toDateString() + ".";
+          document.getElementById("start_date").innerHTML = start_date.toDateString();
+        }
+
+        do_calc();
+        setTimeout(function() {
+          do_calc();
+        }, 1000);
+      })()
+      </script>
+    </body>
+</html>
+
