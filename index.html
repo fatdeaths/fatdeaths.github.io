@@ -11,6 +11,11 @@
       <div class="container">
 
         <div class="jumbotron">
+          <div class="progress">
+            <div id="progress_bar" class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+              <span class="sr-only">45% Complete</span>
+            </div>
+          </div>
           <h1 id="death_count" style="text-align: center"></h1>
         </div>
 
@@ -32,21 +37,34 @@
 
       <script type="text/javascript">
       (function() {
-        var do_calc = function() {
-          var ms_per_min = 60000;
-          var start_date = new Date(2015, 5, 21);
-          var end_date = new Date();
-          var start_end_diff = Math.abs(start_date.getTime() - end_date.getTime());
-          start_end_diff = Math.round(start_end_diff / ms_per_min) / 2;
+        var ms_per_min = 60000;
+        var start_date = new Date(2015, 5, 21);
+        var end_date = new Date();
+        var now = end_date;
+        var start_end_diff = Math.abs(start_date.getTime() - end_date.getTime());
+        var amount_dead = Math.round(start_end_diff / ms_per_min / 2);
+        var progress = 0;
 
-          document.getElementById("death_count").innerHTML = "<span style=\"font-size: 100pt\">" + start_end_diff + "</span><br/>deaths in the U.S. caused by obesity since " + start_date.toDateString() + ".";
+        var update = function() {
+          document.getElementById("death_count").innerHTML = "<span style=\"font-size: 100pt\">" + amount_dead + "</span><br/>deaths in the U.S. caused by obesity since " + start_date.toDateString() + ".";
           document.getElementById("start_date").innerHTML = start_date.toDateString();
+          document.getElementById("progress_bar").setAttribute("aria-valuenow", progress);
+          document.getElementById("progress_bar").style.width = progress + "%";
         }
 
-        do_calc();
+        update();
         setInterval(function() {
-          do_calc();
-        }, 5000);
+          var new_now = new Date();
+          var minutes_from_now = Math.round(Math.abs(now.getTime() - new_now.getTime()) / ms_per_min);
+          progress += .83;
+          if (minutes_from_now >= 2) {
+            now = new Date();
+            amount_dead++;
+            progress = 0;
+          }
+          update();
+        }, 1000);
+
       })()
       </script>
     </body>
